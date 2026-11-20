@@ -5,8 +5,9 @@
 **Do I need a GPU?** No. Kinetic is built to be fast on an ordinary CPU with
 AVX2. An NVIDIA GPU makes it faster.
 
-**Does it run on macOS, or on ARM?** No. Kinetic supports Windows and Linux
-on x86-64.
+**Does it run on macOS, or on ARM?** Yes. Starting with the release after
+0.1.0, Kinetic offers CPU-only releases for Linux ARM64 and CPU and Metal
+support on Apple Silicon Macs. See [Install](install.md).
 
 **Is the output really the same with all the speed-ups?** Yes. Greedy
 decoding gives the same tokens as plain decoding, and sampling with a seed

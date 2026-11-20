@@ -61,6 +61,7 @@ us what broke and sent pull requests.
 - Unsloth UD quants on NVIDIA GPUs.
 - Speculative decoding that is never slower than plain decoding on split models.
 - macOS on Apple Silicon, on the CPU and on the GPU through Metal.
+- Linux on ARM64, on the CPU.
 - Older NVIDIA GPUs (Pascal, Volta), and several GPUs for one model with `--gpus`.
 - Faster follow-ups in a conversation.
 - `-hf`, as llama.cpp takes it.
@@ -82,7 +83,8 @@ bugs to [issues](https://github.com/Veloresearch/kinetic/issues/new). We read al
 irm https://raw.githubusercontent.com/Veloresearch/kinetic/main/scripts/install.ps1 | iex
 ```
 
-On Linux:
+On Linux (ARM64 binaries start with the release after 0.1.0; until then,
+[build from source](docs/src/building.md#build)):
 
 ```sh
 curl -fsSL \
@@ -158,9 +160,10 @@ tar xzf kinetic-0.1.0-linux-x86_64-cuda.tar.gz
 |---|---|
 | `...-x86_64-cuda` | NVIDIA through CUDA, any GPU through Vulkan, the CPU |
 | `...-x86_64-cpu` | the CPU only, the smallest download |
+| `...-linux-arm64-cpu` | Linux on ARM64, CPU only (after 0.1.0) |
 
-Take a `cuda` archive even if you are not sure you have a GPU: it starts on
-any machine and falls back to the CPU. It needs only the graphics driver,
+On x86-64, take a `cuda` archive even if you are not sure you have a GPU: it
+falls back to the CPU. It needs only the graphics driver,
 not the CUDA toolkit. The Windows binary is not signed yet, so SmartScreen
 may stop the first run: choose **More info**, then **Run anyway**.
 

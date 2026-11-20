@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-15]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-2022, macos-15]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +33,11 @@ jobs:
         run: cargo clippy --release --locked --workspace --all-targets --all-features -- -D warnings
       - name: Tests
         run: cargo test --release --locked --workspace
+      - name: Smoke-test the Linux ARM64 CPU build
+        if: runner.os == 'Linux' && runner.arch == 'ARM64'
+        run: |
+          cargo build --release --locked -p kinetic-cli --no-default-features
+          target/release/kinetic --version
       - name: C example (gcc, clang)
         if: runner.os != 'Windows'
         run: |
@@ -55,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-15]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-2022, macos-15]
     runs-on: ${{ matrix.os }}
     defaults:
       run:

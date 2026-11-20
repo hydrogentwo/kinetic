@@ -1,10 +1,11 @@
 # Devices and offload
 
-Kinetic runs on x86-64 and Apple Silicon CPUs, on NVIDIA GPUs through CUDA
-and on AMD, Intel and NVIDIA GPUs through Vulkan, on Windows, Linux and
-macOS. A model larger than the
-GPU can still use it: a dense model splits its layers between the GPU and the
-CPU, and a mixture-of-experts model keeps its experts in system memory.
+Kinetic runs on x86-64 and ARM64 CPUs. The x86-64 GPU builds use CUDA on
+NVIDIA GPUs and Vulkan on AMD, Intel and NVIDIA GPUs. Apple Silicon builds
+use Metal, and Linux ARM64 releases are CPU only. A model larger than GPU
+memory can still use the GPU: a dense model splits its layers between the
+GPU and the CPU, and a mixture-of-experts model keeps its experts in system
+memory.
 
 ## Choosing the device
 
@@ -49,8 +50,9 @@ Intel CPUs have since Haswell (2013) and AMD CPUs since Excavator and every
 Ryzen; Kinetic detects them at runtime. Without them it still runs, on a
 much slower path.
 
-On Apple Silicon the kernels use NEON and the SDOT instruction, which every
-M-series chip has.
+On ARM64, Kinetic uses NEON and detects support for SDOT (integer dot
+products) at runtime. CPUs without SDOT use fallback kernels for those
+operations.
 
 ## Apple GPUs
 
