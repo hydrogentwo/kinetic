@@ -26,7 +26,7 @@ The `cuda` feature is on by default. The build looks for `nvcc` in `$NVCC`,
 then in `$CUDA_PATH/bin`, then on `PATH`. Without it the build still
 succeeds and prints `warning: nvcc not found: CUDA kernels not built`; that
 binary runs on the CPU and says so when you ask for `--device cuda`. To build
-without CUDA at all:
+for the CPU only (the release configuration on Linux ARM64):
 
 ```sh
 cargo build --release -p kinetic-cli --no-default-features

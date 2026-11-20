@@ -1,11 +1,10 @@
 #!/bin/sh
-# Installs Kinetic for the current user on Linux x86-64 and on macOS on
-# Apple Silicon.
+# Installs Kinetic for the current user on x86-64 and ARM64 Linux and on
+# Apple Silicon Macs.
 #
-# Downloads a Kinetic release from GitHub (on Linux the full build, which
-# runs on NVIDIA GPUs through CUDA, on AMD and Intel GPUs through Vulkan and
-# on the CPU; --cpu takes the smaller CPU-only build; macOS has one build,
-# for the GPU through Metal and the CPU), checks it against the release's SHA256SUMS and installs it into
+# Downloads a Kinetic release from GitHub (on x86-64 Linux, CUDA, Vulkan and
+# CPU by default, or CPU-only with --cpu; on ARM64 Linux, CPU only; on macOS,
+# Metal and CPU). Checks the release's SHA256SUMS and installs the binary in
 # ~/.local/bin, with its C library and header in ~/.local/lib and
 # ~/.local/include. Needs no root.
 #
@@ -39,8 +38,9 @@ fail() {
 
 case "$(uname -s)/$(uname -m)" in
     Linux/x86_64) target=linux-x86_64 ;;
+    Linux/aarch64|Linux/arm64) target=linux-arm64 ;;
     Darwin/arm64) target=macos-arm64 ;;
-    Linux/*) fail "Kinetic is built for x86-64 Linux, not $(uname -m)" ;;
+    Linux/*) fail "Kinetic is built for x86-64 and ARM64 Linux, not $(uname -m)" ;;
     Darwin/*) fail "Kinetic is built for Apple Silicon Macs, not $(uname -m)" ;;
     *) fail "this script is for Linux and macOS; on Windows use install.ps1" ;;
 esac
@@ -73,12 +73,14 @@ version="${version#v}"
 [ "$target/$version" != macos-arm64/0.1.0 ] ||
     fail "Kinetic 0.1.0 has no macOS build; they start with the next release. Until then build from source: https://github.com/$repo/blob/main/docs/src/building.md"
 
-# the cuda archive is the full build: CUDA, Vulkan and the CPU in one binary;
-# macOS has one build, with Metal and the CPU
-if [ "$target" = macos-arm64 ]; then
-    variant=metal
-fi
-[ -n "$variant" ] || variant=cuda
+[ "$target/$version" != linux-arm64/0.1.0 ] ||
+    fail "Kinetic 0.1.0 has no Linux ARM64 build; they start with the next release. Until then build from source: https://github.com/$repo/blob/main/docs/src/building.md"
+
+case "$target" in
+    linux-arm64) variant=cpu ;;
+    macos-arm64) variant=metal ;;
+    linux-x86_64) variant=${variant:-cuda} ;;
+esac
 
 name="kinetic-${version}-${target}-${variant}"
 base="https://github.com/$repo/releases/download/v${version}"

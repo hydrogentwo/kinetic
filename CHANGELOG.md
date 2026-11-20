@@ -8,6 +8,9 @@ the rules in [Versioning](https://veloresearch.github.io/kinetic/versioning.html
 
 ### Platforms
 
+- Linux on ARM64: native CI, a `linux-arm64-cpu` release archive with the CLI
+  and C library, and a manylinux ARM64 Python wheel. The shell installer
+  selects the CPU archive automatically.
 - macOS on Apple Silicon, on the CPU: NEON kernels with SDOT for the
   K-quants, Q8_0 and Q4_0, f16 and bf16 weights, activation quantization
   and the chunked delta rule; `kinetic doctor` reports the machine; the

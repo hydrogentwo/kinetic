@@ -1,10 +1,10 @@
 # Install
 
-Kinetic runs on Windows 10 and 11 and on Linux, on x86-64, and on macOS on
-Apple Silicon. Pick one way to install it.
+Kinetic runs on Windows 10 and 11 (x86-64), Linux (x86-64 and ARM64), and
+macOS on Apple Silicon. Pick one way to install it.
 
-The macOS builds start with the release after 0.1.0. Until then, on a Mac,
-[build from source](building.md).
+Prebuilt releases for Linux ARM64 and Apple Silicon start with the release
+after 0.1.0. Until then, [build from source](building.md).
 
 ## Install script
 
@@ -16,12 +16,14 @@ irm https://raw.githubusercontent.com/Veloresearch/kinetic/main/scripts/install.
 curl -fsSL https://raw.githubusercontent.com/Veloresearch/kinetic/main/scripts/install.sh | sh
 ```
 
-The scripts download the latest release (the full build, which runs on NVIDIA
-GPUs through CUDA, on AMD and Intel GPUs through Vulkan and on the CPU), check it against the release's `SHA256SUMS` and install it for the
-current user: into `%LOCALAPPDATA%\Programs\kinetic`, put on the user `PATH`, on
-Windows, and into `~/.local/bin` on Linux and macOS. `-Version 0.1.0` /
-`--version 0.1.0` picks a release and `-Cpu` / `--cpu` the smaller CPU-only
-build. macOS has one build, which uses the GPU through Metal.
+The scripts download the latest release, check it against the release's
+`SHA256SUMS` and install it for the current user: into
+`%LOCALAPPDATA%\Programs\kinetic`, put on the user `PATH`, on Windows, and into
+`~/.local/bin` on Linux and macOS. `-Version 0.1.0` / `--version 0.1.0` picks
+a specific release. On x86-64 the default build includes CUDA, Vulkan and
+CPU support; `-Cpu` / `--cpu` selects the smaller CPU-only build. The shell
+installer automatically selects the CPU-only build on Linux ARM64 and the
+Metal build on macOS.
 
 ## Release binaries
 
@@ -32,8 +34,9 @@ take the archive for your system:
 |---|---|
 | `kinetic-<version>-windows-x86_64-cuda.zip` | Windows, with NVIDIA GPU support |
 | `kinetic-<version>-windows-x86_64-cpu.zip` | Windows, CPU only |
-| `kinetic-<version>-linux-x86_64-cuda.tar.gz` | Linux, with NVIDIA GPU support |
-| `kinetic-<version>-linux-x86_64-cpu.tar.gz` | Linux, CPU only |
+| `kinetic-<version>-linux-x86_64-cuda.tar.gz` | x86-64 Linux, with NVIDIA GPU support |
+| `kinetic-<version>-linux-x86_64-cpu.tar.gz` | x86-64 Linux, CPU only |
+| `kinetic-<version>-linux-arm64-cpu.tar.gz` | ARM64 Linux (AArch64), CPU only |
 | `kinetic-<version>-macos-arm64-metal.tar.gz` | macOS on Apple Silicon, GPU through Metal and CPU |
 
 The `cuda` archives also run on machines without a GPU, on the CPU; they are
@@ -73,10 +76,11 @@ it; see [FAQ](faq.md#windows-says-the-file-is-not-commonly-downloaded).
 pip install kinetic-engine
 ```
 
-Wheels are built for Windows and Linux (manylinux 2.28) on x86-64 and for
-macOS on Apple Silicon, for Python 3.9 and newer. They run models on the CPU; to use an NVIDIA GPU from
-Python, [build the package from source](building.md#the-libraries) with the
-CUDA toolkit installed, or run `kinetic serve` and use any OpenAI client.
+Wheels are built for Windows on x86-64, Linux (manylinux 2.28) on x86-64 and
+ARM64, and macOS on Apple Silicon, for Python 3.9 and newer. They run models
+on the CPU. To use an NVIDIA GPU from Python, [build the package from
+source](building.md#the-libraries) with the CUDA toolkit installed, or run
+`kinetic serve` and use any OpenAI client.
 See [Python, C and Rust](bindings.md) for the API.
 
 ## Docker
@@ -88,6 +92,13 @@ repository:
 ```sh
 docker build -f docker/Dockerfile -t kinetic .
 docker run --rm -p 8080:8080 -v "$PWD/models:/models:ro" kinetic /models/model.gguf
+```
+
+The CPU image builds natively on Linux ARM64. To target ARM64 from another
+architecture, use an ARM64-capable Buildx builder:
+
+```sh
+docker buildx build --platform linux/arm64 -f docker/Dockerfile -t kinetic:arm64 --load .
 ```
 
 For NVIDIA GPUs, with the
