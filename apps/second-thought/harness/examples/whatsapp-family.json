@@ -1,0 +1,56 @@
+{
+  "app": "whatsapp",
+  "thread": "Mum",
+  "width": 1080,
+  "self_names": [
+    "You"
+  ],
+  "nodes": [
+    {
+      "text": "Mum"
+    },
+    {
+      "text": "online"
+    },
+    {
+      "text": "Today"
+    },
+    {
+      "text": "are you coming sunday? your aunt is asking",
+      "speaker": "Mum",
+      "bounds": [
+        40,
+        220,
+        900,
+        300
+      ]
+    },
+    {
+      "text": "she wants to know how many for lunch",
+      "speaker": "Mum",
+      "bounds": [
+        40,
+        310,
+        880,
+        370
+      ]
+    },
+    {
+      "text": "i said i'd let her know by friday",
+      "speaker": "Mum",
+      "bounds": [
+        40,
+        380,
+        860,
+        440
+      ]
+    },
+    {
+      "text": "read"
+    },
+    {
+      "text": "type a message"
+    }
+  ],
+  "draft": ""
+}

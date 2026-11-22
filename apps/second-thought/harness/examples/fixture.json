@@ -1,0 +1,277 @@
+{
+  "_comment": "Canned answers so the harness, the demo page and CI run with no model at all. The fixture client picks a reading by the app the prompt is about, so the demo stays coherent without inventing a model. These are plausible, not clever: they exist so a broken install still shows the shape of the thing instead of an error.",
+  "by_app": {
+    "whatsapp": {
+      "intent": {
+        "situation": "Your mum is asking whether you are coming on Sunday. Your aunt needs a number for lunch, and a deadline is already in the thread - Friday.",
+        "what_they_want": "A yes or a no, and how many people. Not a maybe.",
+        "what_you_want": "Not to commit until you know, without making her chase you a third time.",
+        "stakes": "medium",
+        "open_questions": [
+          "Are you actually free on Sunday?",
+          "Is anyone coming with you?"
+        ],
+        "noticed": [
+          "The deadline is your mum's promise to your aunt, not your own",
+          "Three separate questions arrived in one go - only the last one is a question"
+        ]
+      },
+      "options": [
+        {
+          "text": "yeah i'll be there, just me",
+          "move": "answer",
+          "tone": "plain",
+          "why": "Answers both questions in six words.",
+          "risk": 6
+        },
+        {
+          "text": "i'm in unless something blows up at work - can i confirm thursday?",
+          "move": "buy_time",
+          "tone": "honest",
+          "why": "Gives her a real date to tell your aunt instead of leaving her to chase.",
+          "risk": 12
+        },
+        {
+          "text": "can't do this sunday, sorry - tell her i'll come the week after",
+          "move": "decline",
+          "tone": "warm",
+          "why": "Says no once, and offers the next one so it is not a dead end.",
+          "risk": 18
+        }
+      ],
+      "suggested_intents": [
+        "just say yes to family things",
+        "ask for a day to decide without apologising for it"
+      ]
+    },
+    "discord": {
+      "intent": {
+        "situation": "The channel is arranging Saturday. Jules needs a number tonight to book, and Bram has already made a joke about you being asleep.",
+        "what_they_want": "A yes or no from you so the table can be booked.",
+        "what_you_want": "To answer without it becoming a whole thing in front of everyone.",
+        "stakes": "low",
+        "open_questions": [
+          "Do you actually want to go on Saturday?",
+          "Are you bringing anyone?"
+        ],
+        "noticed": [
+          "This is a server: six other people can read whatever you send",
+          "Jules set a deadline of tonight, which is two words long and easy to miss"
+        ]
+      },
+      "options": [
+        {
+          "text": "yeah i'm in, just me",
+          "move": "answer",
+          "tone": "plain",
+          "why": "Closes the loop in five words, which is what the channel is for.",
+          "risk": 5
+        },
+        {
+          "text": "yep count me in - what time?",
+          "move": "ask_back",
+          "tone": "easy",
+          "why": "Says yes and gets the one detail that is actually missing.",
+          "risk": 9
+        },
+        {
+          "text": "probably, let me check something and i'll confirm tonight",
+          "move": "buy_time",
+          "tone": "honest",
+          "why": "Keeps the door open honestly, and repeats the deadline back.",
+          "risk": 14
+        }
+      ],
+      "suggested_intents": [
+        "answer in servers briefly, not with a paragraph"
+      ]
+    },
+    "slack": {
+      "intent": {
+        "situation": "Priya is asking you to own a production migration cutover on the 14th, while she is away. She wants a name in the doc today. You have already said you would check your calendar.",
+        "what_they_want": "A yes or no today so she can plan around it.",
+        "what_you_want": "To be helpful without quietly agreeing to be on call for a week you have not looked at.",
+        "stakes": "high",
+        "open_questions": [
+          "Are you free on the 14th?",
+          "Who covers it if the rollback runs past midnight?"
+        ],
+        "noticed": [
+          "'Mostly watching dashboards' is her estimate, not a commitment",
+          "She is away that week: if it goes wrong, you are the only name in the doc",
+          "This is a work channel - the doc and her manager may both quote your reply"
+        ]
+      },
+      "options": [
+        {
+          "text": "i can own the cutover itself on the 14th, but i'll need someone on the rollback path while you're out - can we name that today?",
+          "move": "boundary",
+          "tone": "direct",
+          "why": "Says yes to the part you can do and makes the missing cover visible before it is your problem.",
+          "risk": 12
+        },
+        {
+          "text": "let me look at the 14th properly after standup and i'll confirm by 11",
+          "move": "buy_time",
+          "tone": "professional",
+          "why": "Honours the deadline she set without agreeing to anything blind.",
+          "risk": 10
+        },
+        {
+          "text": "i can't take the cutover that week, but i can do the dashboard watch on the 15th",
+          "move": "decline",
+          "tone": "plain",
+          "why": "A clean no with a real offer attached, which reads better than a slow yes.",
+          "risk": 22
+        }
+      ],
+      "suggested_intents": [
+        "never agree to on-call cover in the first message",
+        "answer with what i can do, not what i might"
+      ]
+    },
+    "sms": {
+      "intent": {
+        "situation": "Sam apologised last night after an argument. You have since sent three messages and there has been no reply - the last one asks whether you are okay.",
+        "what_they_want": "Space, probably. Nothing in the thread says otherwise.",
+        "what_you_want": "Reassurance, which is why the messages keep coming.",
+        "stakes": "high",
+        "open_questions": [
+          "Is Sam asleep, at work, or avoiding you?",
+          "How much of this do you want to have said tomorrow?"
+        ],
+        "noticed": [
+          "Three messages in a row, the last of which was sent at 22:48",
+          "You have already apologised once for the same thing tonight",
+          "The thread reads like a search for reassurance, not for a reply"
+        ]
+      },
+      "options": [
+        {
+          "text": "no rush, i'm around tomorrow if you want to talk",
+          "move": "close_out",
+          "tone": "easy",
+          "why": "Ends the run of messages without asking for anything back.",
+          "risk": 8
+        },
+        {
+          "text": "going to sleep - we'll sort it out, i'm not going anywhere",
+          "move": "warm",
+          "tone": "steady",
+          "why": "A last line that settles the thing instead of reopening it.",
+          "risk": 11
+        },
+        {
+          "text": "i'll leave you to it. message me when you're ready",
+          "move": "boundary",
+          "tone": "calm",
+          "why": "Puts the next move in their hands, which is where it belongs tonight.",
+          "risk": 14
+        }
+      ],
+      "suggested_intents": [
+        "after 11pm, wait until morning",
+        "one apology per argument"
+      ]
+    },
+    "linkedin": {
+      "intent": {
+        "situation": "Dana, who you met once at a meetup, is hiring a staff engineer and wants a call this week. She has already softened the ask so a no is cheap.",
+        "what_they_want": "A yes, a no, or a date for a short call.",
+        "what_you_want": "To keep the door open without pretending to be more interested than you are.",
+        "stakes": "medium",
+        "open_questions": [
+          "Do you want this job?",
+          "Do you remember the meetup?"
+        ],
+        "noticed": [
+          "You met once, briefly - do not write as if you know her",
+          "She has given you an easy exit, so a slow no costs you nothing",
+          "Every sentence here could be forwarded to a hiring panel"
+        ]
+      },
+      "options": [
+        {
+          "text": "Thanks for reaching out - I'm not looking to move right now, but I'd be glad to stay in touch.",
+          "move": "decline",
+          "tone": "professional",
+          "why": "A clean no that keeps the relationship, and nothing to walk back later.",
+          "risk": 6
+        },
+        {
+          "text": "Happy to talk. I'm free Thursday after 4pm or Friday morning - would either work?",
+          "move": "answer",
+          "tone": "professional",
+          "why": "Turns the ask into a concrete slot, which is what she asked for.",
+          "risk": 8
+        },
+        {
+          "text": "Flattered, but I'm not the right fit for a runtime team. If you're hiring on inference infra, that's closer to my work.",
+          "move": "decline",
+          "tone": "direct",
+          "why": "Declines the role and points at the one you would want.",
+          "risk": 16
+        }
+      ],
+      "suggested_intents": [
+        "decline recruiter messages in one sentence",
+        "never claim to remember a meeting i don't"
+      ]
+    },
+    "generic": {
+      "intent": {
+        "situation": "Someone sent a message and you have not answered yet.",
+        "what_they_want": "An answer, or at least an acknowledgement.",
+        "what_you_want": "To reply without over-thinking it.",
+        "stakes": "low",
+        "open_questions": [],
+        "noticed": [
+          "No profile for this app, so the norms are unknown"
+        ]
+      },
+      "options": [
+        {
+          "text": "yeah, sorry, been flat out. what's the ask?",
+          "move": "answer",
+          "tone": "neutral",
+          "why": "Opens the door without promising anything.",
+          "risk": 8
+        },
+        {
+          "text": "give me a bit and i'll come back to this properly",
+          "move": "buy_time",
+          "tone": "honest",
+          "why": "Buys time honestly instead of going quiet.",
+          "risk": 8
+        }
+      ],
+      "suggested_intents": []
+    }
+  },
+  "guard_by_app": {
+    "sms": {
+      "risk": 78,
+      "why": "This is another apology into a thread that has already had several, and it promises something about tonight you cannot keep.",
+      "fix": "i'm sorry, i know i keep saying it. no pressure to reply tonight.",
+      "alt": "no pressure to reply tonight. i'm around tomorrow if you want to talk."
+    },
+    "slack": {
+      "risk": 58,
+      "why": "This says yes to the whole week, including the part Priya is being careful not to promise.",
+      "fix": "I can own the cutover on the 14th \u2014 who's covering the rollback path while you're out?",
+      "alt": "I can own the cutover itself, but I'll need a named cover for the rollback path. Can we sort that today?"
+    },
+    "linkedin": {
+      "risk": 44,
+      "why": "It implies a shared history you do not have and commits you further than you meant.",
+      "fix": "",
+      "alt": ""
+    },
+    "generic": {
+      "risk": 52,
+      "why": "Something in this would be hard to walk back once it is sent.",
+      "fix": "",
+      "alt": ""
+    }
+  }
+}

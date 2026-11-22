@@ -1,0 +1,65 @@
+{
+  "app": "slack",
+  "thread": "#eng-platform",
+  "width": 1080,
+  "self_names": [
+    "You"
+  ],
+  "nodes": [
+    {
+      "text": "# eng-platform"
+    },
+    {
+      "text": "Priya Raman  9:41 AM"
+    },
+    {
+      "text": "quick one - can you own the migration cutover on the 14th? i'm out that week",
+      "speaker": "Priya Raman",
+      "bounds": [
+        40,
+        200,
+        1000,
+        260
+      ]
+    },
+    {
+      "text": "it's mostly watching dashboards, maybe an hour of real work",
+      "speaker": "Priya Raman",
+      "bounds": [
+        40,
+        270,
+        1000,
+        320
+      ]
+    },
+    {
+      "text": "You  9:52 AM"
+    },
+    {
+      "text": "let me check my calendar and come back to you",
+      "bounds": [
+        200,
+        380,
+        1080,
+        420
+      ]
+    },
+    {
+      "text": "Priya Raman  9:53 AM"
+    },
+    {
+      "text": "thanks - ideally today so i can put a name in the doc",
+      "speaker": "Priya Raman",
+      "bounds": [
+        40,
+        470,
+        1000,
+        520
+      ]
+    },
+    {
+      "text": "type a message"
+    }
+  ],
+  "draft": "yes of course, consider it done - I'll cover the whole week and handle the rollback too if it comes to that"
+}

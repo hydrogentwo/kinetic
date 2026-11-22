@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Second Thought</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"></span>
+    <span class="name">Second Thought</span>
+  </div>
+  <div class="status" id="status" title="what is answering">
+    <span class="dot" id="dot"></span><span id="status-text">connecting…</span>
+  </div>
+</header>
+
+<main>
+  <!-- the phone: what the overlay is looking at -->
+  <section class="phone-wrap">
+    <div class="phone">
+      <div class="phone-bar">
+        <span class="app-label" id="app-label">WhatsApp</span>
+        <span class="thread" id="thread-label">Mum</span>
+      </div>
+      <div class="screen" id="screen">
+        <p class="empty">Pick a conversation below.</p>
+      </div>
+      <div class="composer">
+        <div class="draft" id="draft-display" contenteditable="true" spellcheck="false"
+             data-placeholder="type a reply…"></div>
+        <button class="send" id="send" title="In the app this is your own send button. Second Thought never presses it.">↑</button>
+      </div>
+      <div class="nudge" id="nudge" hidden>
+        <div class="nudge-head">
+          <span class="nudge-title" id="nudge-title">hold on</span>
+          <button class="nudge-close" id="nudge-close" aria-label="dismiss">✕</button>
+        </div>
+        <p class="nudge-why" id="nudge-why"></p>
+        <ul class="nudge-reasons" id="nudge-reasons"></ul>
+        <div class="nudge-fix" id="nudge-fix" hidden>
+          <span class="label">instead</span>
+          <p id="nudge-fix-text"></p>
+          <button class="copy" id="nudge-copy">copy</button>
+        </div>
+      </div>
+    </div>
+    <p class="hint">
+      This is the real reading path. The transcript on the left is parsed from the same
+      node list the Android app extracts from the screen.
+    </p>
+  </section>
+
+  <!-- the overlay panel -->
+  <section class="panel">
+    <div class="picker" id="picker"></div>
+
+    <div class="card reading" id="reading-card" hidden>
+      <div class="card-head">
+        <h2>What's going on</h2>
+        <span class="stakes" id="stakes"></span>
+      </div>
+      <p class="situation" id="situation"></p>
+      <div class="reading-grid">
+        <div><span class="label">they want</span><p id="they-want"></p></div>
+        <div><span class="label">you want</span><p id="you-want"></p></div>
+      </div>
+      <details id="detail" hidden>
+        <summary>what it noticed</summary>
+        <ul id="noticed"></ul>
+        <ul id="questions"></ul>
+      </details>
+    </div>
+
+    <div class="card options" id="options-card" hidden>
+      <div class="card-head">
+        <h2>What you could send</h2>
+        <button class="ghost" id="again" title="read the thread again, with different options">again</button>
+      </div>
+      <div id="options"></div>
+    </div>
+
+    <div class="card intents" id="intent-card">
+      <div class="card-head">
+        <h2>What you're trying to do</h2>
+        <button class="ghost" id="intent-edit">edit</button>
+      </div>
+      <ul class="intent-list" id="intent-list"></ul>
+      <div class="qtext" id="qtext">
+        <input id="want-to-say" placeholder="or say it yourself, badly — it will do the wording" autocomplete="off">
+        <button id="want-go">→</button>
+      </div>
+      <div class="suggested" id="suggested"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>runs on <code>kinetic serve</code>, on your machine</span>
+  <span class="sep">·</span>
+  <a href="/health">health</a>
+  <span class="sep">·</span>
+  <a href="/profile">profiles</a>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

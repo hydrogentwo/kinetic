@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ok">#7fbf5f</color>
+    <color name="bad">#e0704a</color>
+    <color name="accent">#e8b04b</color>
+    <color name="ink">#f4efe6</color>
+    <color name="muted">#9a9184</color>
+</resources>

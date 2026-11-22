@@ -1,0 +1,43 @@
+{
+  "app": "linkedin",
+  "thread": "Dana Whitfield",
+  "width": 1080,
+  "self_names": [
+    "You"
+  ],
+  "nodes": [
+    {
+      "text": "Dana Whitfield"
+    },
+    {
+      "text": "Dana Whitfield  8:12 AM"
+    },
+    {
+      "text": "Hi - we met briefly at the platform meetup last month. I'm hiring for a staff engineer role on our runtime team and your work on inference scheduling came up. Would you be open to a call this week?",
+      "speaker": "Dana Whitfield",
+      "bounds": [
+        40,
+        200,
+        1000,
+        330
+      ]
+    },
+    {
+      "text": "Dana Whitfield  8:13 AM"
+    },
+    {
+      "text": "No pressure either way, I know these messages are a lot.",
+      "speaker": "Dana Whitfield",
+      "bounds": [
+        40,
+        420,
+        1000,
+        470
+      ]
+    },
+    {
+      "text": "type a message"
+    }
+  ],
+  "draft": ""
+}
