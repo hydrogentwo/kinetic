@@ -55,8 +55,47 @@ def cmd_init(args) -> int:
     return 0
 
 
+def _resolve_fixture(path: str | None) -> str | None:
+    """Make a relative fixture path work from anywhere.
+
+    `--fixture examples/fixture.json` is how the docs and the demo start the
+    server, which means it only worked from the harness directory. A resume from
+    the repo root or a service unit would silently fall back to the built-in
+    answers instead of the app-aware ones, so resolve it against the harness
+    directory first and fail loudly if it is not there.
+    """
+    if not path:
+        return None
+    candidate = Path(path).expanduser()
+    if candidate.is_absolute() or candidate.exists():
+        return str(candidate.resolve())
+    for base in (EXAMPLES.parent, Path.cwd(), EXAMPLES):
+        if (base / path).exists():
+            return str((base / path).resolve())
+    raise SystemExit(f"no such fixture: {path} (looked in {EXAMPLES.parent} and {Path.cwd()})")
+
+
+def _flush_stdout() -> None:
+    """Line-buffer stdout when it is not a terminal.
+
+    Run under a service manager, a supervisor, or the preview harness, Python
+    buffers stdout in 8 KB blocks, so the "listening on ..." banner and any
+    error sit invisible in a pipe until the process exits. Anyone debugging a
+    server that "started but shows nothing" should not have to know that.
+    """
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+        sys.stderr.reconfigure(line_buffering=True)
+    except (AttributeError, ValueError):
+        pass
+
+
 def cmd_serve(args) -> int:
+    _flush_stdout()
     cfg = Config.load()
+    fixture = _resolve_fixture(args.fixture)
+    if fixture:
+        args.fixture = fixture
     c = _client(cfg, args.fixture)
     from .server import serve
     from .store import Store
@@ -67,6 +106,7 @@ def cmd_serve(args) -> int:
     print(f"second-thought listening on {base}  (bound {host})")
     print(f"  demo:   {base}/")
     print(f"  health: {base}/health")
+    print(f"  backend: {c.resolve().name}" + (f"  fixture: {Path(args.fixture).name}" if args.fixture else ""))
     if cfg.server.token:
         from .server import local_ip
         print(f"  phone:  http://{local_ip()}:{actual}   token: {cfg.server.token}")
