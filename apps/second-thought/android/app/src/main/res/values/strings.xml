@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Second Thought</string>
+    <string name="tagline">Reads the conversation you are looking at, works out what you mean, and offers it. On your own machine.</string>
+
+    <string name="s1">1 · Let it read a screen</string>
+    <string name="s1_body">Android only grants this through an accessibility service, so this is where you turn it on. It can read the text of the apps listed in its scope, and nothing else: it cannot tap, swipe, or see your keystrokes. Turn it off here and the app reads nothing at all.</string>
+    <string name="s1_button">Open accessibility settings</string>
+
+    <string name="s2">2 · Let it know which app is in front</string>
+    <string name="s2_body">Without this it can only guess, and guessing wrong means reading the wrong window. Usage access reports which app is in front. It is read-only and stays on the phone.</string>
+    <string name="s2_button">Open usage access settings</string>
+
+    <string name="s3">3 · Show the panel</string>
+    <string name="s3_body">A floating window you drag where you want it. It never covers the message box unless you put it there, and it never presses send.</string>
+    <string name="s3_button">Turn on the panel</string>
+    <string name="notifications_button">Allow the status bar notification</string>
+
+    <string name="s4">4 · Pair with your machine</string>
+    <string name="s4_body">Run this on the laptop, in the folder you downloaded the harness to:
+
+second-thought serve --lan
+
+It prints a token. On the same wifi, put this phone's address (your laptop's IP and the port it printed) here, and the token below.</string>
+    <string name="url_hint">http://192.168.1.20:8787</string>
+    <string name="token_hint">pairing token from the laptop</string>
+    <string name="save">Save</string>
+    <string name="pause">Pause everything</string>
+
+    <string name="privacy_note">What this does not do: it does not send anything to a server, it does not store your messages outside this phone and the laptop you point it at, and it does not take a single action without you. The reading, the suggestions and the warnings all come from a model running on your own machine.</string>
+
+    <string name="a11y_description">Second Thought reads the conversation in the messaging app you have open and offers replies in the floating panel. It reads only the apps you approved, never passwords, and never taps or types for you.</string>
+    <string name="handle_description">Drag to move the panel, tap to expand or collapse</string>
+</resources>

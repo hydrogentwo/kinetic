@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0e0d0b"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#f4efe6"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="18dp"
+            android:text="@string/tagline"
+            android:textColor="#9a9184"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:background="#1d1a15"
+            android:padding="12dp"
+            android:textColor="#e8b04b"
+            android:textSize="13sp" />
+
+        <!-- 1. accessibility -->
+        <TextView style="@style/Section" android:text="@string/s1" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s1_body"
+            android:textColor="#9a9184"
+            android:textSize="12sp" />
+        <TextView android:id="@+id/a11y_state" style="@style/State" />
+        <Button android:id="@+id/a11y_button" style="@style/Action" android:text="@string/s1_button" />
+
+        <!-- 2. usage access -->
+        <TextView style="@style/Section" android:text="@string/s2" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s2_body"
+            android:textColor="#9a9184"
+            android:textSize="12sp" />
+        <Button android:id="@+id/usage_button" style="@style/Action" android:text="@string/s2_button" />
+
+        <!-- 3. overlay -->
+        <TextView style="@style/Section" android:text="@string/s3" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s3_body"
+            android:textColor="#9a9184"
+            android:textSize="12sp" />
+        <TextView android:id="@+id/overlay_state" style="@style/State" />
+        <Button android:id="@+id/overlay_button" style="@style/Action" android:text="@string/s3_button" />
+        <Button android:id="@+id/notifications" style="@style/Action" android:text="@string/notifications_button" />
+
+        <!-- 4. brain -->
+        <TextView style="@style/Section" android:text="@string/s4" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s4_body"
+            android:textColor="#9a9184"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/url_hint"
+            android:inputType="textUri"
+            android:textColor="#f4efe6"
+            android:textColorHint="#5e564a"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/token_hint"
+            android:inputType="text"
+            android:textColor="#f4efe6"
+            android:textColorHint="#5e564a"
+            android:importantForAutofill="no" />
+
+        <TextView android:id="@+id/brain_state" style="@style/State" />
+        <Button android:id="@+id/save" style="@style/Action" android:text="@string/save" />
+
+        <Button android:id="@+id/pause" style="@style/Danger" android:text="@string/pause" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/privacy_note"
+            android:textColor="#6d6559"
+            android:textSize="11sp" />
+    </LinearLayout>
+</ScrollView>

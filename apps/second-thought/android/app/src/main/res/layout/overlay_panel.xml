@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The floating panel. A handle to drag it, a WebView with the panel itself.
+  Height is wrap_content and capped in the HTML, so the window never covers the
+  message the person is answering.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <View
+        android:id="@+id/handle"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:background="@drawable/handle"
+        android:contentDescription="@string/handle_description" />
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="120dp"
+        android:maxHeight="420dp"
+        android:background="@android:color/transparent" />
+</LinearLayout>

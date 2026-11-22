@@ -1,0 +1,75 @@
+{
+  "app": "discord",
+  "thread": "#general",
+  "width": 1080,
+  "self_names": [
+    "You"
+  ],
+  "nodes": [
+    {
+      "text": "# general"
+    },
+    {
+      "text": "Alice"
+    },
+    {
+      "text": "ok so the plan is saturday, i'll book the table",
+      "speaker": "Alice",
+      "bounds": [
+        40,
+        200,
+        940,
+        250
+      ]
+    },
+    {
+      "text": "Bram"
+    },
+    {
+      "text": "works for me",
+      "speaker": "Bram",
+      "bounds": [
+        40,
+        330,
+        900,
+        370
+      ]
+    },
+    {
+      "text": "Jules"
+    },
+    {
+      "text": "@You you in? need a number by tonight",
+      "speaker": "Jules",
+      "bounds": [
+        40,
+        450,
+        900,
+        500
+      ]
+    },
+    {
+      "text": "Bram"
+    },
+    {
+      "text": "he's probably asleep lol",
+      "speaker": "Bram",
+      "bounds": [
+        40,
+        570,
+        900,
+        610
+      ]
+    },
+    {
+      "text": "Jules"
+    },
+    {
+      "text": "Jules is typing\u2026"
+    },
+    {
+      "text": "message #general"
+    }
+  ],
+  "draft": ""
+}

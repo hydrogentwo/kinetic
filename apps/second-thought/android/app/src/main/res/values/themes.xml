@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SecondThought" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">#0e0d0b</item>
+        <item name="android:statusBarColor">#0e0d0b</item>
+        <item name="android:navigationBarColor">#0e0d0b</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Section">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#9a9184</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="State">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">#7d7466</item>
+    </style>
+
+    <style name="Action">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:backgroundTint">#2a2318</item>
+        <item name="android:textColor">#e8b04b</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Danger">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">26dp</item>
+        <item name="android:backgroundTint">#2c1a14</item>
+        <item name="android:textColor">#e0704a</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+</resources>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Second Thought</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  /* Nothing here is a page. It is a strip of glass that floats over someone
+     else's app, so it has to stay out of the way. */
+  html, body { background: transparent; }
+  body { padding: 0; }
+  .sheet {
+    background: rgba(20, 17, 13, .97);
+    border: 1px solid #2b261e;
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+  .strip {
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 12px; cursor: pointer;
+  }
+  .where { font-family: var(--mono); font-size: 10px; color: #8d8474; letter-spacing: .5px; }
+  .headline {
+    flex: 1; font-size: 12.5px; line-height: 1.3; color: #ded5c5;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .chev { color: #6b6355; font-size: 11px; }
+  .body { padding: 0 12px 12px; display: none; }
+  .body.open { display: block; }
+  .sit { font-size: 13px; line-height: 1.42; color: #efe7d8; margin: 2px 0 9px; }
+  .want { font-size: 11.5px; color: #9a9184; margin: 0 0 10px; }
+  .want b { color: #c3b9a8; font-weight: 600; }
+  .o {
+    border: 1px solid #2b261e; border-radius: 9px; padding: 9px 10px;
+    margin-bottom: 7px; background: #201c16;
+  }
+  .o .t { font-size: 13.5px; line-height: 1.4; white-space: pre-wrap; }
+  .o .m {
+    display: flex; align-items: center; gap: 7px; margin-top: 6px;
+  }
+  .o button {
+    background: #3a2f1c; border: 1px solid #5c4a26; color: #f0d9a8;
+    border-radius: 6px; padding: 3px 9px; font-size: 11px; font-family: var(--mono);
+  }
+  .nudge {
+    border-left: 3px solid var(--accent); background: #2a2013;
+    padding: 9px 10px; border-radius: 8px; margin-bottom: 9px;
+  }
+  .nudge.hard { border-left-color: var(--warn); background: #2c1a14; }
+  .nudge .k { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; }
+  .nudge.hard .k { color: var(--warn); }
+  .nudge p { margin: 4px 0 0; font-size: 12.5px; line-height: 1.4; color: #e6dfd0; }
+  .nudge .fix { margin-top: 7px; font-size: 12.5px; color: #f0d9a8; }
+  .row { display: flex; gap: 7px; margin-top: 8px; }
+  .row button {
+    flex: 1; background: #24201a; border: 1px solid #3a342a; color: #c3b9a8;
+    border-radius: 7px; padding: 6px; font-size: 11px; font-family: var(--mono);
+  }
+  .quiet { font-size: 12px; color: #7d7466; line-height: 1.45; }
+  .err { font-family: var(--mono); font-size: 11px; color: #e0a08a; }
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet">
+  <div class="strip" id="strip">
+    <span class="where" id="where">—</span>
+    <span class="headline" id="headline">reading…</span>
+    <span class="chev" id="chev">▾</span>
+  </div>
+  <div class="body" id="body">
+    <div id="nudge-slot"></div>
+    <p class="sit" id="sit"></p>
+    <p class="want" id="want"></p>
+    <div id="options"></div>
+    <div class="row">
+      <button id="ago">read again</button>
+      <button id="hide">hide</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// The floating panel. Driven by the phone, not by a person: the accessibility
+// service pushes readings in with STOverlay.reading(json), and STOverlay.verdict
+// when the draft in the compose box changes. Everything here is presentation.
+//
+// It calls /guard itself for drafts it can see in the page (the demo path), and
+// the phone calls /guard for the app underneath. Both land in verdict().
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const native = window.SecondThoughtNative || null;
+  const token = new URLSearchParams(location.search).get('token') || '';
+  let open = true;
+  let last = null;
+  let lastDraft = '';
+
+  function esc(s) {
+    return String(s ?? '').replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function setOpen(v) {
+    open = v;
+    $('body').classList.toggle('open', v);
+    $('chev').textContent = v ? '▾' : '▸';
+  }
+
+  window.STOverlay = {
+    collapse(v) { setOpen(!!v); },
+    reading(json) {
+      last = json;
+      render();
+    },
+    error(body) {
+      $('headline').textContent = 'the brain did not answer';
+      $('sit').innerHTML = '<span class="err">' + esc(body).slice(0, 200) + '</span>';
+    },
+    verdict(v) {
+      renderNudge(v);
+    },
+  };
+
+  function render() {
+    if (!last) return;
+    const r = last.reading || {};
+    const opts = last.options || [];
+    $('where').textContent = (last.app || '').toUpperCase() + (last.thread ? ' · ' + last.thread : '');
+    $('headline').textContent = r.situation || (opts.length ? opts.length + ' options' : 'nothing needed');
+    $('sit').textContent = r.situation || '';
+    const want = [];
+    if (r.what_they_want) want.push('<b>they want</b> ' + esc(r.what_they_want));
+    $('want').innerHTML = want.join(' · ');
+
+    const box = $('options');
+    box.innerHTML = '';
+    if (!opts.length) {
+      box.innerHTML = '<p class="quiet">' + esc(last.empty_hint || 'Nothing worth sending right now.') + '</p>';
+      return;
+    }
+    opts.forEach((o) => {
+      const el = document.createElement('div');
+      el.className = 'o';
+      el.innerHTML = '<div class="t">' + esc(o.text) + '</div>' +
+        '<div class="m"><span class="move">' + esc(o.move_label || o.move) + '</span>' +
+        '<span class="risk">risk ' + (o.risk ?? 0) + '</span>' +
+        '<button>copy</button></div>';
+      el.querySelector('button').onclick = () => {
+        copy(o.text);
+        el.querySelector('button').textContent = 'copied';
+      };
+      box.appendChild(el);
+    });
+  }
+
+  function renderNudge(v) {
+    const slot = $('nudge-slot');
+    if (!v || !v.worth_showing) { slot.innerHTML = ''; return; }
+    const hard = (v.risk || 0) >= 65;
+    const fix = v.fix || v.alt || '';
+    slot.innerHTML =
+      '<div class="nudge' + (hard ? ' hard' : '') + '">' +
+      '<span class="k">' + (hard ? 'are you sure' : 'hold on') + '</span>' +
+      '<p>' + esc(v.why || (v.reasons || [])[0] || '') + '</p>' +
+      (fix ? '<div class="fix">' + esc(fix) + '<div class="row"><button id="usefix">use this instead</button></div></div>' : '') +
+      '</div>';
+    const b = document.getElementById('usefix');
+    if (b) b.onclick = () => { copy(fix); b.textContent = 'copied - paste it in'; };
+    if (!open) setOpen(true);
+  }
+
+  function copy(text) {
+    if (native && native.copy) { native.copy(text); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+  }
+
+  // The phone can hand us the draft it can see in the compose box. When it
+  // does, this page asks /guard directly and shows the answer in place.
+  window.STOverlay.guard = function (draft) {
+    if (!draft || draft === lastDraft) return;
+    lastDraft = draft;
+    fetch('/guard' + (token ? '?token=' + encodeURIComponent(token) : ''), {
+      method: 'POST',
+      headers: Object.assign({ 'Content-Type': 'application/json' },
+        token ? { Authorization: 'Bearer ' + token } : {}),
+      body: JSON.stringify(Object.assign({}, last && last.screen ? last.screen : {}, { draft })),
+    }).then((r) => r.json()).then(renderNudge).catch(() => {});
+  };
+
+  $('strip').onclick = () => setOpen(!open);
+  $('hide').onclick = (e) => {
+    e.stopPropagation();
+    if (native && native.dismiss) native.dismiss();
+    else document.getElementById('sheet').style.display = 'none';
+  };
+  $('ago').onclick = (e) => {
+    e.stopPropagation();
+    if (native && native.readAgain) native.readAgain();
+  };
+  setOpen(true);
+
+  // Opened in a plain browser (?overlay=1&demo=1) there is no phone behind it,
+  // so pull the first scenario and render it. On the phone this never runs.
+  if (new URLSearchParams(location.search).get('demo') === '1') {
+    fetch('/scenarios').then((r) => r.json()).then((d) => {
+      const s = d.scenarios && d.scenarios[0];
+      if (!s) return;
+      return fetch('/read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(s.screen),
+      }).then((r) => r.json()).then((res) => {
+        res.app = s.screen.app_label || s.screen.app;
+        res.thread = s.screen.thread;
+        window.STOverlay.reading(res);
+        if (s.screen.draft) window.STOverlay.guard(s.screen.draft);
+      });
+    }).catch(() => {});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "app": "sms",
+  "thread": "Sam",
+  "width": 1080,
+  "self_names": [
+    "You"
+  ],
+  "nodes": [
+    {
+      "text": "Sam"
+    },
+    {
+      "text": "Yesterday 21:14"
+    },
+    {
+      "text": "that was a lot tonight. i'm sorry i snapped",
+      "speaker": "Sam",
+      "bounds": [
+        40,
+        180,
+        860,
+        240
+      ]
+    },
+    {
+      "text": "You 21:40"
+    },
+    {
+      "text": "it's fine, honestly. i'm sorry too, i was already wound up",
+      "bounds": [
+        220,
+        280,
+        1040,
+        340
+      ]
+    },
+    {
+      "text": "You 22:02"
+    },
+    {
+      "text": "i didn't mean what i said about your brother",
+      "bounds": [
+        220,
+        380,
+        1040,
+        440
+      ]
+    },
+    {
+      "text": "You 22:48"
+    },
+    {
+      "text": "anyway. are we ok?",
+      "bounds": [
+        220,
+        480,
+        1040,
+        520
+      ]
+    },
+    {
+      "text": "Today"
+    },
+    {
+      "text": "delivered"
+    },
+    {
+      "text": "type a message"
+    }
+  ],
+  "draft": "i'm sorry, i know i keep saying i'm sorry - I just don't want you to be angry with me. call me? I'll keep my phone on all night and I promise I won't bring any of it up again"
+}
